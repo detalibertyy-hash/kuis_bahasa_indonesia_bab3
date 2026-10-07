@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Kalimat Langsung & Tidak Langsung</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f2f7ff;margin:0;padding:20px;color:#17233c}
+.container{max-width:760px;margin:auto;background:white;border-radius:20px;padding:24px;box-shadow:0 8px 30px #0001}
+h1{text-align:center;color:#1769aa;font-size:25px}
+.info{text-align:center;color:#555;margin-bottom:20px}
+.q{font-weight:bold;font-size:18px;line-height:1.5}
+.opt{display:block;background:#f5f8fc;border:2px solid #dbe5f0;border-radius:12px;padding:13px;margin:10px 0;cursor:pointer}
+.opt:hover{background:#eaf4ff}
+button{width:100%;padding:14px;border:0;border-radius:12px;background:#1769aa;color:white;font-size:17px;font-weight:bold;margin-top:15px}
+#result{text-align:center;font-size:20px;font-weight:bold;margin-top:20px}
+</style></head>
+<body>
+<div class="container">
+<h1>📚 Kuis Bahasa Indonesia Kelas 6</h1>
+<div class="info">Kalimat Langsung dan Kalimat Tidak Langsung<br>20 Soal Pilihan Ganda</div>
+<div id="quiz"></div>
+<button onclick="finish()">Selesai & Lihat Nilai</button>
+<div id="result"></div>
+</div>
+<script>
+const data = [
+["Manakah yang merupakan kalimat langsung?",["Ibu mengatakan bahwa ia akan pergi ke pasar.","Ibu berkata, “Saya akan pergi ke pasar.”","Ibu memberitahukan bahwa ia pergi ke pasar.","Ibu menjelaskan bahwa dirinya pergi ke pasar."],1],
+["Kalimat berikut yang menggunakan tanda baca dengan tepat adalah …",["Ayah berkata “Belajarlah dengan rajin.”","Ayah berkata, “Belajarlah dengan rajin.”","Ayah berkata. “Belajarlah dengan rajin.”","Ayah berkata; “Belajarlah dengan rajin.”"],1],
+["Ubahlah kalimat langsung berikut menjadi kalimat tidak langsung: Rina berkata, “Saya sudah mengerjakan tugas.”",["Rina berkata bahwa ia sudah mengerjakan tugas.","Rina berkata bahwa saya sudah mengerjakan tugas.","Rina berkata, bahwa ia sudah mengerjakan tugas.","Rina berkata “ia sudah mengerjakan tugas.”"],0],
+["Ubahlah kalimat tidak langsung berikut menjadi kalimat langsung: Budi mengatakan bahwa ia akan datang besok.",["Budi mengatakan, “Saya akan datang besok.”","Budi mengatakan bahwa, “Saya akan datang besok.”","Budi mengatakan “ia akan datang besok.”","Budi mengatakan. “Saya akan datang besok.”"],0],
+["Ciri utama kalimat langsung adalah …",["Menggunakan kata bahwa dan tidak memakai tanda petik","Mengutip perkataan seseorang secara langsung dan menggunakan tanda petik","Selalu menggunakan kata ia atau dia","Selalu diawali dengan kata bahwa"],1],
+["Kalimat “Guru berkata, “Besok kita akan melaksanakan ulangan.”” merupakan kalimat langsung.",["Benar","Salah"],0],
+["Manakah kalimat tidak langsung yang tepat?",["Siti berkata, “Saya sedang membaca.”","Siti berkata bahwa ia sedang membaca.","Siti berkata; “Ia sedang membaca.”","Siti berkata. Saya sedang membaca."],1],
+["Kalimat “Ibu bertanya, “Apakah kamu sudah makan?”” termasuk …",["Kalimat berita","Kalimat perintah tidak langsung","Kalimat langsung berupa pertanyaan","Kalimat tidak langsung berupa pernyataan"],2],
+["Kalimat tidak langsung dari “Andi berkata, “Saya suka membaca buku.”” adalah …",["Andi berkata bahwa ia suka membaca buku.","Andi berkata bahwa saya suka membaca buku.","Andi berkata, bahwa saya suka membaca buku.","Andi berkata “ia suka membaca buku.”"],0],
+["Kata penghubung yang sering digunakan dalam kalimat tidak langsung adalah …",["bahwa","tetapi","karena","atau"],0],
+["Manakah penulisan kalimat langsung yang benar?",["Kakak berkata, “Tolong tutup pintunya!”","Kakak berkata “Tolong tutup pintunya”!","Kakak berkata. “Tolong tutup pintunya!”","Kakak berkata, Tolong tutup pintunya!"],0],
+["Kalimat “Ayah mengatakan bahwa ia akan pulang sore ini.” merupakan kalimat langsung.",["Benar","Salah"],1],
+["Perubahan kata ganti yang tepat dari “Dina berkata, “Saya akan belajar.”” menjadi kalimat tidak langsung adalah …",["saya menjadi ia","saya menjadi kamu","saya menjadi kalian","saya tetap menjadi saya"],0],
+["Kalimat langsung dari “Rani mengatakan bahwa ia sedang sakit.” adalah …",["Rani mengatakan, “Saya sedang sakit.”","Rani mengatakan, “Ia sedang sakit.”","Rani mengatakan bahwa, “Saya sedang sakit.”","Rani mengatakan. “Saya sedang sakit.”"],0],
+["Manakah kalimat yang termasuk kalimat tidak langsung?",["Doni berkata, “Saya ingin bermain.”","Doni berkata bahwa ia ingin bermain.","Doni berteriak, “Ayo bermain!”","Doni bertanya, “Kapan kita bermain?”"],1],
+["Kalimat “Guru berkata, “Anak-anak, kerjakan tugas ini dengan teliti!”” termasuk kalimat langsung karena …",["Menggunakan kata bahwa","Memuat ucapan guru secara persis di dalam tanda petik","Menggunakan kata anak-anak","Menggunakan kata kerja berkata"],1],
+["Ubahlah menjadi kalimat tidak langsung: “Jangan bermain terlalu lama!” pesan Ibu.",["Ibu berpesan agar kami tidak bermain terlalu lama.","Ibu berpesan bahwa kami jangan bermain terlalu lama!","Ibu berpesan, “kami tidak bermain terlalu lama.”","Ibu berpesan kami, “jangan bermain terlalu lama.”"],0],
+["Pilih kalimat yang merupakan kalimat langsung.",["Paman berkata, “Besok saya akan datang.”","Salsa mengatakan bahwa ia sudah selesai belajar.","“Tolong rapikan meja itu,” kata Rudi.","Ayah mengatakan bahwa kami harus berhati-hati."],[0,2]],
+["Bentuk tidak langsung dari “Lina berkata, “Aku akan membantu ibu.”” adalah …",["Lina berkata bahwa ia akan membantu ibu.","Lina berkata bahwa aku akan membantu ibu.","Lina berkata, bahwa ia akan membantu ibu.","Lina berkata “ia akan membantu ibu.”"],0],
+["Manakah pasangan kalimat langsung dan tidak langsung yang tepat?",["Langsung: Ibu berkata, “Saya senang.” — Tidak langsung: Ibu berkata bahwa ia senang.","Langsung: Ibu berkata bahwa ia senang. — Tidak langsung: Ibu berkata, “Saya senang.”","Langsung: Ibu berkata bahwa saya senang. — Tidak langsung: Ibu berkata, “Ia senang.”","Langsung: Ibu berkata. “Saya senang.” — Tidak langsung: Ibu berkata, bahwa ia senang."],0]
+];
+let answers={};
+function render(){
+ let h='';
+ data.forEach((x,i)=>{
+  h+=`<div class="card"><p class="q">${i+1}. ${x[0]}</p>`;
+  x[1].forEach((o,j)=>h+=`<label class="opt"><input type="radio" name="q${i}" value="${j}" onchange="answers[${i}]=${j}"> ${String.fromCharCode(65+j)}. ${o}</label>`);
+  h+='</div>';
+ });
+ document.getElementById('quiz').innerHTML=h;
+}
+function finish(){
+ let score=0, unanswered=0;
+ data.forEach((x,i)=>{
+  if(answers[i]===undefined) unanswered++;
+  else if(Array.isArray(x[2]) ? x[2].includes(answers[i]) && x[2].length===1 : answers[i]===x[2]) score++;
+ });
+ let nilai=Math.round(score/20*100);
+ document.getElementById('result').innerHTML=`Nilai: ${nilai}/100<br>Benar: ${score} dari 20 soal${unanswered?`<br>Belum dijawab: ${unanswered}`:''}`;
+ window.scrollTo(0,document.body.scrollHeight);
+}
+render();
+</script></body></html>
